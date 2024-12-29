@@ -2,19 +2,19 @@ import streamlit as st
 import pandas as pd
 
 def calculate_inflation_impact():
-    st.title("Inflation Impact Calculator")
+    st.title("Inflation Impact Calculator - FA")
 
     # Input Parameters
     current_cost_usd = st.number_input("Enter the current cost per stem in USD", value=0.079, format="%.5f")
 
-    st.subheader("Enter the inflation rates as percentages")
+    st.subheader("Enter the inflation rates")
     inflation_rates = {
         "KES": st.number_input("Inflation rate for KES (%)", value=4.0),
         "USD": st.number_input("Inflation rate for USD (%)", value=3.0),
         "EUR": st.number_input("Inflation rate for EUR (%)", value=2.0)
     }
 
-    st.subheader("Enter the cost distribution as proportions (must sum to 1)")
+    st.subheader("Enter the cost distribution (must sum to 100)")
     cost_distribution = {
         "KES": st.number_input("Proportion of costs in KES (e.g., 0.55 for 55%)", value=0.55),
         "USD": st.number_input("Proportion of costs in USD (e.g., 0.30 for 30%)", value=0.30),
@@ -37,7 +37,7 @@ def calculate_inflation_impact():
     flower_volume = st.number_input("Flower Volume (Comparable Period)", value=1000, step=1, format="%d")
 
     # Calculate total impact
-    total_impact_usd = total_inflation_impact_usd * flower_volume
+    total_impact_usd = updated_cost_usd * flower_volume
 
     # Prepare results table
     results = pd.DataFrame({
@@ -53,9 +53,9 @@ def calculate_inflation_impact():
             inflation_rates["EUR"]
         ],
         "Weighted Inflation Contribution": [
-            cost_distribution["KES"] * (inflation_rates["KES"] / 100),
-            cost_distribution["USD"] * (inflation_rates["USD"] / 100),
-            cost_distribution["EUR"] * (inflation_rates["EUR"] / 100)
+            f"{cost_distribution['KES'] * (inflation_rates['KES'] / 100):.5f}",
+            f"{cost_distribution['USD'] * (inflation_rates['USD'] / 100):.5f}",
+            f"{cost_distribution['EUR'] * (inflation_rates['EUR'] / 100):.5f}"
         ]
     })
 
@@ -70,10 +70,10 @@ def calculate_inflation_impact():
         ],
         "Value in USD": [
             f"{current_cost_usd:.5f}", 
-            weighted_inflation_impact * 100,  # Convert to percentage
+            f"{weighted_inflation_impact * 100:.5f}",  # Convert to percentage
             total_inflation_impact_usd, 
             updated_cost_usd,
-            flower_volume
+            f"{flower_volume:,}"
         ]
     })
 
