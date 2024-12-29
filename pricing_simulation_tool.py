@@ -83,10 +83,9 @@ def calculate_inflation_impact():
     st.subheader("Summary")
     st.dataframe(summary)
 
-    # Display total impact in bold red
-    st.markdown(f"<h3 style='color: red;'>Total Impact in USD: {total_impact_usd:.2f}</h3>", unsafe_allow_html=True)
+    # Display total impact in bold red with comma-separated thousands
+    st.markdown(f"<h3 style='color: red;'>Total Impact in USD: {total_impact_usd:,.2f}</h3>", unsafe_allow_html=True)
 
 # Streamlit will execute this function to display the app
 if __name__ == "__main__":
     calculate_inflation_impact()
-pricing_simulation_tool.pypricing_simulation_tool.py
