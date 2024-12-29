@@ -37,7 +37,7 @@ def calculate_inflation_impact():
     flower_volume = st.number_input("Flower Volume (Comparable Period)", value=1000, step=1, format="%d")
 
     # Calculate total impact
-    total_impact_usd = updated_cost_usd * flower_volume
+    total_impact_usd = total_inflation_impact_usd * flower_volume
 
     # Prepare results table
     results = pd.DataFrame({
